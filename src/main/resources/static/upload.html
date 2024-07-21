@@ -9,10 +9,15 @@
   <input id="fileupload" type="file" name="fileupload"/>
   <button id="upload-button" onclick="uploadFile()"> Upload</button>
   <script>
+    const host = window.location.hostname;
+    const port = window.location.port;
+    const protocol = window.location.protocol;
+    const baseUrl = `${protocol}//${host}${port ? `:${port}` : ''}`;
+    
     async function uploadFile() {
       let formData = new FormData();
       formData.append("data", fileupload.files[0]);
-      await fetch('http://localhost:8080/photos', {
+      await fetch(`${baseUrl}/photos`, {
         method: "POST",
         body: formData
       }).then(result => result.text())
