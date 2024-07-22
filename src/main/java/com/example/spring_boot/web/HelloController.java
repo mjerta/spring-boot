@@ -1,6 +1,7 @@
-package com.example.spring_boot;
+package com.example.spring_boot.web;
 
-import jakarta.validation.Valid;
+import com.example.spring_boot.model.Photo;
+import com.example.spring_boot.service.PhotosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,12 @@ public class HelloController {
   }
 
   @GetMapping("/photos")
-  public Collection<Photo> getPhotos() {
+  public Iterable<Photo> getPhotos() {
     return photosService.get();
   }
 
   @GetMapping("/photos/{id}")
-  public Photo getPhoto(@PathVariable String id) {
+  public Photo getPhoto(@PathVariable Integer id) {
     Photo photo = photosService.get(id);
     if(photo == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -38,13 +39,9 @@ public class HelloController {
     return photo;
   }
 
-
   @DeleteMapping("/photos/{id}")
-  public void delete(@PathVariable String id) {
-    Photo photo = photosService.remove(id);
-    if(photo == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
+  public void delete(@PathVariable Integer id) {
+    photosService.remove(id);
   }
 
   @PostMapping("/photos")

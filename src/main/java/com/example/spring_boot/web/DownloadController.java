@@ -1,6 +1,7 @@
-package com.example.spring_boot;
+package com.example.spring_boot.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.spring_boot.model.Photo;
+import com.example.spring_boot.service.PhotosService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public class DownloadController {
   }
 
   @GetMapping("/download/{id}")
-  public ResponseEntity<byte[]> download(@PathVariable String id) {
+  public ResponseEntity<byte[]> download(@PathVariable Integer id) {
     Photo photo = photosService.get(id);
     if (photo == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
